@@ -24,9 +24,9 @@ interface DieState {
 }
 
 export default function Home() {
-  const [dice, setDice] = useState(allNewDice());
+  const [dice, setDice] = useState<Die[]>([]);
   const [numRolls, setNumRolls] = useState(0);
-  const [startTime, setStartTime] = useState(performance.now());
+  const [startTime, setStartTime] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
   const [tenzies, setTenzies] = useState(false);
   const [bestNumRolls, setBestNumRolls] = useLocalStorageState(
@@ -40,6 +40,12 @@ export default function Home() {
 
   // console.log(`start, timeTaken, numRolls: ${timeTaken}, ${numRolls}`)
   // console.log(`start, best - timeTaken, numRolls: ${bestTimeTaken}, ${bestNumRolls}`)
+
+  useEffect(() => {
+    // Runs once, after hydration (client)
+    setDice(allNewDice());
+    setStartTime(performance.now());
+  }, []);
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -78,6 +84,7 @@ export default function Home() {
     setDice(allNewDice());
     setNumRolls(0);
     setTimeTaken(0);
+    setStartTime(performance.now());
   }
 
   // https://stackoverflow.com/questions/21294302/converting-milliseconds-to-minutes-and-seconds-with-javascript
