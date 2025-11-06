@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Die from "./Die";
+import useLocalStorageState from "./hooks/useLocalStorageState";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 
@@ -28,11 +29,13 @@ export default function Home() {
   const [startTime, setStartTime] = useState(performance.now());
   const [timeTaken, setTimeTaken] = useState(0);
   const [tenzies, setTenzies] = useState(false);
-  const [bestNumRolls, setBestNumRolls] = useState(
-    JSON.parse(localStorage.getItem("bestNumRolls") || "0")
+  const [bestNumRolls, setBestNumRolls] = useLocalStorageState(
+    "bestNumRolls",
+    0
   );
-  const [bestTimeTaken, setBestTimeTaken] = useState(
-    JSON.parse(localStorage.getItem("bestTimeTaken") || "0")
+  const [bestTimeTaken, setBestTimeTaken] = useLocalStorageState(
+    "bestTimeTaken",
+    0
   );
 
   // console.log(`start, timeTaken, numRolls: ${timeTaken}, ${numRolls}`)
@@ -69,18 +72,6 @@ export default function Home() {
       );
     }
   }, [dice]);
-
-  // Save the best num rolls
-  useEffect(() => {
-    localStorage.setItem("bestNumRolls", JSON.stringify(bestNumRolls));
-    // console.log("saved best num rolls: ", bestNumRolls);
-  }, [bestNumRolls]);
-
-  // Save the best time
-  useEffect(() => {
-    localStorage.setItem("bestTimeTaken", JSON.stringify(bestTimeTaken));
-    // console.log("saved best time taken: ", bestTimeTaken);
-  }, [bestTimeTaken]);
 
   function resetGame() {
     setTenzies(false);
