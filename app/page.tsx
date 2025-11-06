@@ -48,6 +48,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    // If no dice, return, nothing to do
+    if (dice.length === 0) return;
+
     const allHeld = dice.every((die) => die.isHeld);
     const firstValue = dice[0].value;
     const allSameValue = dice.every((die) => die.value === firstValue);
