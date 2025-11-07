@@ -126,7 +126,7 @@ export default function Home() {
         })
       );
       setNumRolls((oldNum) => oldNum + 1);
-      console.log(numRolls);
+      // console.log(numRolls);
     } else {
       // Game was won, reset it!
       resetGame();

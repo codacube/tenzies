@@ -10,7 +10,7 @@ export default function useLocalStorageState<T>(key: string, defaultValue: T) {
   // Load
   useEffect(() => {
     const localstorageValue = localStorage.getItem(key);
-    console.log(`loaded ${key} = ${localstorageValue}`);
+    // console.log(`loaded ${key} = ${localstorageValue}`);
 
     if (localstorageValue !== null) {
       setValue(JSON.parse(localstorageValue) as T);
@@ -21,7 +21,7 @@ export default function useLocalStorageState<T>(key: string, defaultValue: T) {
   // Save
   useEffect(() => {
     if (isInitialized) {
-      console.log(`saved ${key} = ${value}`);
+      // console.log(`saved ${key} = ${value}`);
       localStorage.setItem(key, JSON.stringify(value));
     }
   }, [isInitialized, key, value]);
