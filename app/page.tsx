@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Die from "./Die";
 import useLocalStorageState from "./hooks/useLocalStorageState";
 import { nanoid } from "nanoid";
@@ -38,8 +37,8 @@ export default function Home() {
     0
   );
 
-  // console.log(`start, timeTaken, numRolls: ${timeTaken}, ${numRolls}`)
-  // console.log(`start, best - timeTaken, numRolls: ${bestTimeTaken}, ${bestNumRolls}`)
+  // console.log(`start, timeTaken, numRolls: ${timeTaken}, ${numRolls}`);
+  // console.log(`start, best - timeTaken, numRolls: ${bestTimeTaken}, ${bestNumRolls}`);
 
   useEffect(() => {
     // Runs once, after hydration (client)
@@ -54,6 +53,9 @@ export default function Home() {
     const allHeld = dice.every((die) => die.isHeld);
     const firstValue = dice[0].value;
     const allSameValue = dice.every((die) => die.value === firstValue);
+
+    // console.log(`allheld=${allHeld}, firstValue=${firstValue}, allSameValue=${allSameValue}`);
+
     if (allHeld && allSameValue) {
       // Game won
       setTenzies(true);
@@ -61,12 +63,12 @@ export default function Home() {
       // Check if this is the best time
       const timeRecorded = performance.now() - startTime;
       setTimeTaken(timeRecorded);
-      // console.log("timeRecorded: ", timeRecorded)
-      // console.log("timetaken: ", timeTaken)
+      // console.log("timeRecorded: ", timeRecorded);
+      // console.log("timetaken: ", timeTaken);
 
       setBestTimeTaken((oldBestTimeTaken: number): number => {
-        // console.log("timeRecorded: ", timeRecorded)
-        // console.log("oldtimetaken: ", oldBestTimeTaken)
+        // console.log("timeRecorded: ", timeRecorded);
+        // console.log("oldtimetaken: ", oldBestTimeTaken);
 
         if (oldBestTimeTaken === 0 || timeRecorded < oldBestTimeTaken) {
           return timeRecorded;
@@ -154,8 +156,8 @@ export default function Home() {
         {tenzies && <Confetti />}
         <h1 className="title">Tenzies</h1>
         <p className="instructions">
-          Roll until all dice are the same. Click each die to freeze it at its
-          current value between rolls.
+          Roll until all dice are the same number. Click each die to freeze it
+          at its current value between rolls.
         </p>
         <div className="dice-container">{diceElements}</div>
         <button className="roll-dice" onClick={rollDice}>
