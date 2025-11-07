@@ -40,6 +40,7 @@ export default function Home() {
   // console.log(`start, timeTaken, numRolls: ${timeTaken}, ${numRolls}`);
   // console.log(`start, best - timeTaken, numRolls: ${bestTimeTaken}, ${bestNumRolls}`);
 
+  // Init Game
   useEffect(() => {
     // Runs once, after hydration (client)
     setDice(allNewDice());
@@ -63,13 +64,7 @@ export default function Home() {
       // Check if this is the best time
       const timeRecorded = performance.now() - startTime;
       setTimeTaken(timeRecorded);
-      // console.log("timeRecorded: ", timeRecorded);
-      // console.log("timetaken: ", timeTaken);
-
       setBestTimeTaken((oldBestTimeTaken: number): number => {
-        // console.log("timeRecorded: ", timeRecorded);
-        // console.log("oldtimetaken: ", oldBestTimeTaken);
-
         if (oldBestTimeTaken === 0 || timeRecorded < oldBestTimeTaken) {
           return timeRecorded;
         } else {
@@ -78,9 +73,13 @@ export default function Home() {
       });
 
       // Check if this is the best number of rolls
-      setBestNumRolls((oldNumRolls: number) =>
-        numRolls < oldNumRolls ? numRolls : oldNumRolls
-      );
+      setBestNumRolls((oldNumRolls: number) => {
+        if (!oldNumRolls) {
+          return numRolls;
+        } else {
+          return numRolls < oldNumRolls ? numRolls : oldNumRolls;
+        }
+      });
     }
   }, [dice]);
 
@@ -127,6 +126,7 @@ export default function Home() {
         })
       );
       setNumRolls((oldNum) => oldNum + 1);
+      console.log(numRolls);
     } else {
       // Game was won, reset it!
       resetGame();
